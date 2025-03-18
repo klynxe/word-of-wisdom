@@ -1,0 +1,23 @@
+services:
+
+  wow-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: wow-server
+    deploy:
+      replicas: 3
+    env_file:
+      - ./server/.env_docker
+
+  wow-client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: wow-client
+    deploy:
+      replicas: 5
+    depends_on:
+      - wow-server
+    env_file:
+      - ./client/.env_docker
